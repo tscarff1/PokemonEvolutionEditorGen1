@@ -97,9 +97,9 @@ public class MainFrame extends JFrame {
 		setupButtonsPanel();
 		
 		detailsPanel = new JPanel(new CardLayout());
+		detailsPanel.add(blankPanel, Method.NONE);
 		detailsPanel.add(stonesPanel, Method.STONE);
 		detailsPanel.add(levelPanel, Method.LEVEL);
-		detailsPanel.add(blankPanel, Method.NONE);
 		
 		middlePanel.add(methodsPanel);
 		middlePanel.add(detailsPanel);
