@@ -3,12 +3,12 @@ package com.brodudeiii.evoedit.rby.swing;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.File;
 
 import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.event.MenuListener;
 
 public class MenuBar extends JMenuBar{
 	private MainFrame mainFrame;
@@ -45,7 +45,13 @@ public class MenuBar extends JMenuBar{
 			if(e.getActionCommand().equals(ACTION_OPEN)) {
 				JFileChooser chooser = new JFileChooser();
 				
-				int val = chooser.showOpenDialog(mainFrame);
+				int selectedOption = chooser.showOpenDialog(mainFrame);
+				
+			 if (selectedOption == JFileChooser.APPROVE_OPTION) {
+		            File file = chooser.getSelectedFile();
+		            
+		            //TODO: HAndle processing input file
+		        }
 			}
 		}
 
