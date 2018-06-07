@@ -42,16 +42,21 @@ public class MenuBar extends JMenuBar{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			JFileChooser chooser = new JFileChooser();
 			if(e.getActionCommand().equals(ACTION_OPEN)) {
-				JFileChooser chooser = new JFileChooser();
-				
 				int selectedOption = chooser.showOpenDialog(mainFrame);
 				
 			 if (selectedOption == JFileChooser.APPROVE_OPTION) {
 		            File file = chooser.getSelectedFile();
 		            
-		            //TODO: HAndle processing input file
+		            //TODO: Handle processing input file
 		        }
+			} else if(e.getActionCommand().equals(ACTION_SAVE)) {
+				int selectedOption = chooser.showSaveDialog(mainFrame);
+				 if (selectedOption == JFileChooser.APPROVE_OPTION) {
+			            File file = chooser.getSelectedFile();
+			            //TODO: Handle saving file
+			        }
 			}
 		}
 
