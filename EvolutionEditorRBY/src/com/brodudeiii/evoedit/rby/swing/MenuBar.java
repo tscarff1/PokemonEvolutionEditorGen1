@@ -10,6 +10,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+import com.brodudeiii.evoedit.rby.data.FileManager;
+
 public class MenuBar extends JMenuBar{
 	private MainFrame mainFrame;
 	
@@ -48,8 +50,11 @@ public class MenuBar extends JMenuBar{
 				
 			 if (selectedOption == JFileChooser.APPROVE_OPTION) {
 		            File file = chooser.getSelectedFile();
-		            
-		            //TODO: Handle processing input file
+		            try {
+		            	FileManager.openFile(file);
+		            } catch(Exception ex) {
+		            	mainFrame.displayError(ex.getMessage());
+		            }
 		        }
 			} else if(e.getActionCommand().equals(ACTION_SAVE)) {
 				int selectedOption = chooser.showSaveDialog(mainFrame);
