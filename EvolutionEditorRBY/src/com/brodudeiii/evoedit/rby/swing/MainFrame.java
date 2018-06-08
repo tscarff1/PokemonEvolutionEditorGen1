@@ -37,7 +37,7 @@ public class MainFrame extends JFrame {
 	private JPanel detailsPanel;
 	private StonesPanel stonesPanel;
 	private LevelPanel levelPanel;
-	private JPanel buttonsPanel;
+	private ButtonsPanel buttonsPanel;
 	private JPanel blankPanel;
 	
 	public static class Method {
@@ -87,7 +87,7 @@ public class MainFrame extends JFrame {
 		stonesPanel = new StonesPanel(this);
 		levelPanel = new LevelPanel(this);
 		setupBlankPanel();
-		setupButtonsPanel();
+		buttonsPanel = new ButtonsPanel(this);
 		
 		detailsPanel = new JPanel(new CardLayout());
 		detailsPanel.add(blankPanel, Method.NONE);
@@ -102,8 +102,6 @@ public class MainFrame extends JFrame {
 	
 	private void setupBlankPanel() {
 		blankPanel = new JPanel();
-		levelPanel.setPreferredSize(new Dimension(MID_PANEL_WIDTH,100));
-		levelPanel.setBorder(BorderFactory.createLoweredBevelBorder());
 	}
 	
 	public void setDetailsPanel(String method){
@@ -126,17 +124,5 @@ public class MainFrame extends JFrame {
 	
 	public void displayError(String message) {
 		JOptionPane.showMessageDialog(null, message, "Error", JOptionPane.ERROR_MESSAGE);
-	}
-	
-	private void setupButtonsPanel() {
-		buttonsPanel = new JPanel();
-		buttonsPanel.setPreferredSize(new Dimension(MID_PANEL_WIDTH, 45));
-		buttonsPanel.setBorder(BorderFactory.createLoweredBevelBorder());
-		JButton applyBtn = new JButton("APPLY");
-		applyBtn.setPreferredSize(new Dimension(110, 30));
-		JButton revertBtn = new JButton("REVERT");
-		revertBtn.setPreferredSize(new Dimension(110, 30));
-		buttonsPanel.add(applyBtn);
-		buttonsPanel.add(revertBtn);
 	}
 }
