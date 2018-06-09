@@ -3,10 +3,8 @@ package com.brodudeiii.evoedit.rby.swing;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Container;
-import java.awt.Dimension;
 
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -14,20 +12,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
+import com.brodudeiii.evoedit.rby.data.DataManager;
+
 public class MainFrame extends JFrame {
-	private static String[] pokemonNames = {"Bulbasaur", "Ivysaur", "Venusaur", "Squirtle", "Wartortle", "Blastoise", "Charmander", "Charmeleon", 
-			"Charizard", "Caterpie", "Metapod", "Butterfree", "Weedle", "Kakuna", "Beedrill", "Pidgey", "Pidgeotto", "Pidgeot", "Rattata", 
-			"Raticate", "Meowth", "Persian", "Pikachu", "Raichu", "Nidoran", "Nidorino", "Nidoking", "Nidorina", "Nidoqueen", "Mankey", 
-			"Primeape", "Machop", "Machoke", "Machamp", "Poliwag", "Poliwhirl", "Poliwrath", "Spearow", "Fearow", "Geodude", "Graveler", "Golem",
-			"Onix", "Diglett", "Dugtrio", "Zubat", "Golbat", "Magikarp", "Gyarados", "Clefairy", "Clefable", "Jigglypuff", "Wigglytuff", "Paras", 
-			"Parasect", "Ekans", "Arbok", "Staryu", "Starmie", "Horsea", "Seadra", "Sandshrew", "Sandslash", "Bellsprout", "Weepinbell", 
-			"Victreebel", "Oddish", "Gloom", "Vileplume", "Abra", "Kadabra", "Alakazam", "Slowpoke", "Slowbro", "Eevee", "Flareon", "Jolteon"
-			,"Vaporeon", "Magnemite", "Magneton", "Drowzee", "Hypno", "Exeggcute", "Exeggutor", "Seel", "Dewgong", "Jynx", "Tangela", "Scyther",
-			"Pinsir", "Chansey", "Dratini", "Dragonair", "Dragonite", "Tentacool", "Tentacruel", "Venonat", "Venomoth", "Articuno", "Zapdos", 
-			"Moltres", "Snorlax", "Mewtwo", "Mew", "Growlithe", "Arcanine", "Ponyta", "Rapidash", "Ditto", "Koffing", "Weezing", "Grimer", "Muk",
-			"Magmar", "Voltorb", "Electrode", "Electabuzz", "Kangaskhan", "Gastly", "Haunter", "Gengar", "Cubone", "Marowak", "Psyduck", "Golduck",
-			"Hitmonlee", "Hitmonchan", "Kabuto", "Kabutops", "Omanyte", "Omastar", "Lapras", "Aerodactyl", "Rhyhorn", "Rhydon", "Tauros", "Vulpix"
-			,"Ninetales", "Farfetch'd", "Doduo", "Dodrio", "Krabby", "Kingler"};
+	private static String[] pokemonNames;
 	
 	public static final int RADIOHGAP = 40;
 	public static final int MID_PANEL_WIDTH = 260;
@@ -39,6 +27,8 @@ public class MainFrame extends JFrame {
 	private LevelPanel levelPanel;
 	private ButtonsPanel buttonsPanel;
 	private JPanel blankPanel;
+	
+	private DataManager dataManager;
 	
 	public static class Method {
 		public static final String NONE = "NONE";
@@ -55,22 +45,12 @@ public class MainFrame extends JFrame {
 		
 		this.setJMenuBar(new MenuBar(this));
 		
-		JList<String> list = new JList(pokemonNames);
-		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		list.setLayoutOrientation(JList.VERTICAL);
-		list.setVisibleRowCount(-1);
+		dataManager = new DataManager();
 		
-		JList<String> list2 = new JList(pokemonNames);
-		list2.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		list2.setLayoutOrientation(JList.VERTICAL);
-		list2.setVisibleRowCount(-1);
-		
-		JScrollPane pokemonScroll1 = new JScrollPane(list);
-		JScrollPane pokemonScroll2 = new JScrollPane(list2);
 		Container content = this.getContentPane();
 		content.setLayout(new BorderLayout());
-		content.add(pokemonScroll1, BorderLayout.LINE_START);
-		content.add(pokemonScroll2, BorderLayout.LINE_END);
+		content.add(new PokemonInputPanel(this), BorderLayout.LINE_START);
+		content.add(new JPanel(), BorderLayout.LINE_END);
 		
 		setupMiddlePanel();
 		
@@ -124,5 +104,9 @@ public class MainFrame extends JFrame {
 	
 	public void displayError(String message) {
 		JOptionPane.showMessageDialog(null, message, "Error", JOptionPane.ERROR_MESSAGE);
+	}
+	
+	public DataManager getDataManager() {
+		return dataManager;
 	}
 }
