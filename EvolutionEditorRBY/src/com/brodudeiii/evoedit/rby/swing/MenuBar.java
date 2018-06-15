@@ -9,6 +9,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.brodudeiii.evoedit.rby.data.FileManager;
 
@@ -46,6 +48,8 @@ public class MenuBar extends JMenuBar{
 		public void actionPerformed(ActionEvent e) {
 			JFileChooser chooser = new JFileChooser();
 			if(e.getActionCommand().equals(ACTION_OPEN)) {
+				chooser.setFileFilter( new FileNameExtensionFilter("Gameboy Files (*.gb,*.gbc)", "gb", "gbc"));
+				chooser.setAcceptAllFileFilterUsed(false);
 				int selectedOption = chooser.showOpenDialog(mainFrame);
 				
 			 if (selectedOption == JFileChooser.APPROVE_OPTION) {
