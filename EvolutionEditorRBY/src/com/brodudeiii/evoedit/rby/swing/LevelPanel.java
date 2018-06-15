@@ -39,4 +39,8 @@ public class LevelPanel extends JPanel {
 		
 		return level;
 	}
+	
+	public void setLevel(int level) {
+		levelText.setText(Integer.toString(level));
+	}
 }

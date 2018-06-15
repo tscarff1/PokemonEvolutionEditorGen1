@@ -45,7 +45,7 @@ public class MainFrame extends JFrame {
 		
 		this.setJMenuBar(new MenuBar(this));
 		
-		dataManager = new DataManager();
+		dataManager = new DataManager(this);
 		
 		Container content = this.getContentPane();
 		content.setLayout(new BorderLayout());
@@ -108,5 +108,43 @@ public class MainFrame extends JFrame {
 	
 	public DataManager getDataManager() {
 		return dataManager;
+	}
+	
+	public void setEvolutionMethod(int method) {
+		switch(method) {
+			case 0:
+				methodsPanel.selectButton(Method.NONE);
+				setDetailsPanel(Method.NONE);
+				break;
+			case 1:
+				methodsPanel.selectButton(Method.LEVEL);
+				setDetailsPanel(Method.LEVEL);
+				break;
+			case 2:
+				methodsPanel.selectButton(Method.STONE);
+				setDetailsPanel(Method.STONE);
+				break;
+			case 3:
+				methodsPanel.selectButton(Method.TRADE);
+				setDetailsPanel(Method.TRADE);
+				break;
+			default:
+				//TODO: Handle errors better
+				break;
+		}
+	}
+	
+	public void setEvolutionDetail(int evoDetail) {
+		String selectedMethod = methodsPanel.getSelectedMethod();
+		if(selectedMethod == null) {
+			displayError("ERROR: No evolution selected.");
+		}
+		if(selectedMethod.equals(Method.LEVEL)) {
+			levelPanel.setLevel(evoDetail);
+		} else if(selectedMethod.equals(Method.STONE)) {
+			stonesPanel.setStone(evoDetail);
+		}
+		
+		
 	}
 }

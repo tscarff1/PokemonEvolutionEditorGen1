@@ -17,6 +17,8 @@ import com.brodudeiii.evoedit.rby.swing.MainFrame.Method;
 
 public class MethodsPanel extends JPanel {
 	private MainFrame mainFrame;
+	private List<JRadioButton> methodButtons;
+	
 	
 	public MethodsPanel(MainFrame mainFrame) {
 		super();
@@ -35,10 +37,10 @@ public class MethodsPanel extends JPanel {
 		JRadioButton methodLevelUp = new JRadioButton(Method.LEVEL);
 		JRadioButton methodStone = new JRadioButton(Method.STONE);
 		JRadioButton methodTrade = new JRadioButton(Method.TRADE);
-		ButtonGroup evolveMethodBtnGrp = new ButtonGroup();
+		ButtonGroup buttonGrp = new ButtonGroup();
 		methodNone.setSelected(true);
 
-		List<JRadioButton> methodButtons = new ArrayList<>();
+		methodButtons = new ArrayList<>();
 		methodButtons.add(methodNone);
 		methodButtons.add(methodLevelUp);
 		methodButtons.add(methodStone);
@@ -50,10 +52,27 @@ public class MethodsPanel extends JPanel {
 		MethodsListener methodsRadioListener = new MethodsListener();
 		
 		for(JRadioButton radioBtn : methodButtons) {
-			evolveMethodBtnGrp.add(radioBtn);
+			buttonGrp.add(radioBtn);
 			radioBtn.addActionListener(methodsRadioListener);
 			add(radioBtn);
 		}
+	}
+	
+	public void selectButton(String method) {
+		for(JRadioButton button : methodButtons) {
+			if(button.getActionCommand().equals(method)) {
+				button.setSelected(true);
+			}
+		}
+	}
+	
+	public String getSelectedMethod() {
+		for(JRadioButton button : methodButtons) {
+			if(button.isSelected()) {
+				return button.getActionCommand();
+			}
+		}
+		return null;
 	}
 	
 	private class MethodsListener implements ActionListener {
