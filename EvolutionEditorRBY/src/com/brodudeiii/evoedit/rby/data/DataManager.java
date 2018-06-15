@@ -8,14 +8,21 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.brodudeiii.evoedit.rby.swing.MainFrame;
+
 public class DataManager {
 
-	private Map<String, Integer> pointerData;
+	//For inputs we want the pointer given the pokemon name
+	private Map<String, Integer> pointerDataByName;
+	//For setting outputs we want the name given the pointer
+	private Map<Integer, String> nameDataByPointer;
+	
 	private String activeInput; //The input Pokemon currently being modified
+	private MainFrame mainFrame;
 	
-	
-	public DataManager() {
-		pointerData = new LinkedHashMap<String, Integer>();
+	public DataManager(MainFrame mainFrame) {
+		this.mainFrame = mainFrame;
+		pointerDataByName = new LinkedHashMap<String, Integer>();
 		File inputFile = new File(".\\src\\com\\brodudeiii\\evoedit\\rby\\data/evo-pointers.txt");
 		BufferedReader reader = null;
 		try {
@@ -23,7 +30,7 @@ public class DataManager {
 			String line;
 			while((line = reader.readLine()) != null) {
 				int offset = Integer.parseInt(reader.readLine());
-				pointerData.put(line, offset);
+				pointerDataByName.put(line, offset);
 			}
 		} catch (FileNotFoundException e) {
 			
@@ -45,12 +52,14 @@ public class DataManager {
 		
 	}
 	
-	public Map<String, Integer> getPointerData() {
-		return pointerData;
+	public String[] getPokemonNamesArray() {
+		return (String[]) pointerDataByName.keySet().toArray(new String[pointerDataByName.keySet().size()]);
 	}
 	
 	public void setActiveInput(String pokemon) {
 		this.activeInput = pokemon;
-		System.out.println(pokemon + ": " + pointerData.get(pokemon));
+		byte[] data = FileManager.getBytes(pointerDataByName.get(pokemon), 4);
+		mainFrame.setEvolutionMethod(Integer.valueOf(data[0]));
+		mainFrame.setEvolutionDetail(Integer.valueOf(data[1]));
 	}
 }

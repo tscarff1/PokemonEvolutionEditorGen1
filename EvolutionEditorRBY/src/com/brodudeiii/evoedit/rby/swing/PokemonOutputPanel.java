@@ -11,9 +11,7 @@ public class PokemonOutputPanel {
 	
 	public PokemonOutputPanel(MainFrame mainFrame) {
 		this.mainFrame = mainFrame;
-		Map<String,Integer> pointerData = mainFrame.getDataManager().getPointerData();
-		String[] pokemonNames = (String[]) pointerData.keySet().toArray(new String[pointerData.keySet().size()]);
-		JList<String> list = new JList(pokemonNames);
+		JList<String> list = new JList(mainFrame.getDataManager().getPokemonNamesArray());
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list.setLayoutOrientation(JList.VERTICAL);
 		list.setVisibleRowCount(-1);

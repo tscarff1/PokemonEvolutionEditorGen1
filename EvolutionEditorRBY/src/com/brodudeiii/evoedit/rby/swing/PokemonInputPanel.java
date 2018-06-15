@@ -15,9 +15,7 @@ public class PokemonInputPanel extends JScrollPane {
 	
 	public PokemonInputPanel(MainFrame mainFrame) {
 		this.mainFrame = mainFrame;
-		Map<String,Integer> pointerData = mainFrame.getDataManager().getPointerData();
-		String[] pokemonNames = (String[]) pointerData.keySet().toArray(new String[pointerData.keySet().size()]);
-		pokemonList = new JList(pokemonNames);
+		pokemonList = new JList(mainFrame.getDataManager().getPokemonNamesArray());
 		pokemonList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		pokemonList.setLayoutOrientation(JList.VERTICAL);
 		pokemonList.setVisibleRowCount(-1);
