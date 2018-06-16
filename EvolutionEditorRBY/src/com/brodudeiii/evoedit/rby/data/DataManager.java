@@ -16,7 +16,6 @@ public class DataManager {
 	private Map<String, PokemonData>pokemonDataByName;
 	//For setting outputs we want the name given the pointer
 	private Map<Integer, String> namesByPointer;
-	private Map<Integer, String> namesByPokedex;
 	
 	private String activeInput; //The input Pokemon currently being modified
 	private MainFrame mainFrame;
@@ -25,7 +24,6 @@ public class DataManager {
 		this.mainFrame = mainFrame;
 		pokemonDataByName = new LinkedHashMap<String, PokemonData>();
 		namesByPointer = new LinkedHashMap<Integer, String>();
-		namesByPokedex = new LinkedHashMap<Integer, String>();
 		File inputFile = new File(".\\src\\com\\brodudeiii\\evoedit\\rby\\data/evo-pointers.txt");
 		BufferedReader reader = null;
 		try {
@@ -36,7 +34,6 @@ public class DataManager {
 				int pokedex = Integer.parseInt(reader.readLine());
 				pokemonDataByName.put(line, new PokemonData(line, offset, pokedex));
 				namesByPointer.put(offset, line);
-				namesByPokedex.put(pokedex, line);
 			}
 		} catch (FileNotFoundException e) {
 			
