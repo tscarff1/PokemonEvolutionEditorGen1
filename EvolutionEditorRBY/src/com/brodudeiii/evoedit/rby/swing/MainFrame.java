@@ -50,8 +50,7 @@ public class MainFrame extends JFrame {
 		Container content = this.getContentPane();
 		content.setLayout(new BorderLayout());
 		content.add(new PokemonInputPanel(this), BorderLayout.LINE_START);
-		content.add(new JPanel(), BorderLayout.LINE_END);
-		
+		content.add(new PokemonOutputPanel(this), BorderLayout.LINE_END);
 		setupMiddlePanel();
 		
 		this.setVisible(true);
