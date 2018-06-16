@@ -6,9 +6,11 @@ import java.nio.file.Files;
 
 public class FileManager {
 	private static byte[] workingFile;
-	 
+	private static boolean gameLoaded = false;
+	
 	 public static void openFile(File file) throws IOException {
 		 workingFile = Files.readAllBytes(file.toPath());
+		 gameLoaded = true;
 	 }
 	 
 	 public static void saveFile(File file) {
@@ -21,5 +23,9 @@ public class FileManager {
 			 returnData[i] = workingFile[offset+i];
 		 }
 		 return returnData;
+	 }
+	 
+	 public static boolean isGameLoaded() {
+		  return gameLoaded;
 	 }
 }
