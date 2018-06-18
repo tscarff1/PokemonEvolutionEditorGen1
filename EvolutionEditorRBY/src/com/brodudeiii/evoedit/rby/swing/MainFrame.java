@@ -20,13 +20,15 @@ public class MainFrame extends JFrame {
 	public static final int RADIOHGAP = 40;
 	public static final int MID_PANEL_WIDTH = 260;
 	
-	
 	private MethodsPanel methodsPanel;
 	private JPanel detailsPanel;
 	private StonesPanel stonesPanel;
 	private LevelPanel levelPanel;
 	private ButtonsPanel buttonsPanel;
 	private JPanel blankPanel;
+	
+	private PokemonInputPanel inputPanel;
+	private PokemonOutputPanel outputPanel;
 	
 	private DataManager dataManager;
 	
@@ -49,8 +51,10 @@ public class MainFrame extends JFrame {
 		
 		Container content = this.getContentPane();
 		content.setLayout(new BorderLayout());
-		content.add(new PokemonInputPanel(this), BorderLayout.LINE_START);
-		content.add(new PokemonOutputPanel(this), BorderLayout.LINE_END);
+		inputPanel = new PokemonInputPanel(this);
+		outputPanel = new PokemonOutputPanel(this);
+		content.add(inputPanel, BorderLayout.LINE_START);
+		content.add(outputPanel, BorderLayout.LINE_END);
 		setupMiddlePanel();
 		
 		this.setVisible(true);
@@ -145,5 +149,9 @@ public class MainFrame extends JFrame {
 		}
 		
 		
+	}
+	
+	public void setEvolutionOutput(String name) {
+		outputPanel.setSelection(name);
 	}
 }

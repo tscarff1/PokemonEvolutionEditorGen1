@@ -13,7 +13,7 @@ public class PokemonOutputPanel extends JScrollPane {
 	
 	public PokemonOutputPanel(MainFrame mainFrame) {
 		this.mainFrame = mainFrame;
-		JList<String> pokemonList = new JList(mainFrame.getDataManager().getPokemonNamesArrayPokedexOrder());
+		pokemonList = new JList(mainFrame.getDataManager().getPokemonNamesArrayPokedexOrder());
 		pokemonList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		pokemonList.setLayoutOrientation(JList.VERTICAL);
 		pokemonList.setVisibleRowCount(-1);
@@ -22,11 +22,22 @@ public class PokemonOutputPanel extends JScrollPane {
 		pokemonList.addListSelectionListener(new ListListener());
 	}
 	
+	public void setSelection(int selection) {
+		pokemonList.setSelectedIndex(selection);
+	}
+	
+	public void setSelection(String selection) {
+		for(int i =0; i < pokemonList.getModel().getSize(); i++) {
+			if(pokemonList.getModel().getElementAt(i) != null && pokemonList.getModel().getElementAt(i).equals(selection)) {
+				setSelection(i);
+			}
+		}
+	}
+	
 	private class ListListener implements ListSelectionListener {
 
 		@Override
 		public void valueChanged(ListSelectionEvent e) {
-			mainFrame.getDataManager().setActiveInput(pokemonList.getSelectedValue().toString());
 		}
 		
 	}

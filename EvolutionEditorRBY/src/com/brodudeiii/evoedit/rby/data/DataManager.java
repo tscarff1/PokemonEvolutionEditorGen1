@@ -56,7 +56,7 @@ public class DataManager {
 	}
 	
 	public String[] getPokemonNamesArray() {
-		return (String[]) pokemonDataByName.keySet().toArray(new String[pokemonDataByName.keySet().size()]);
+		return pokemonDataByName.keySet().toArray(new String[pokemonDataByName.keySet().size()]);
 	}
 	
 	public String[] getPokemonNamesArrayPokedexOrder() {
@@ -68,7 +68,12 @@ public class DataManager {
 	}
 	
 	public String getPokemonNameByPosition(int pos) {
-		return ((String[]) pokemonDataByName.keySet().toArray())[pos];
+		//Account for multiple Eeveelutions
+		//The game evolution indexes only count eevee as one pokemon, but I'm counting it as multiple for now
+		//Since eevee has 3 evolutions in gen 1, we need to increase the index by two any time we passed eevee's third evolution (one for each extra Eevee)
+		if(pos >= 104)
+			pos += 2;
+		return (String) pokemonDataByName.keySet().toArray()[pos];
 	}
 	
 	public void setActiveInput(String pokemon) {
@@ -77,7 +82,16 @@ public class DataManager {
 		byte[] data = FileManager.getBytes(currentPtr, 4);
 		mainFrame.setEvolutionMethod(Integer.valueOf(data[0]));
 		mainFrame.setEvolutionDetail(Integer.valueOf(data[1]));
-		int evoPos =Integer.valueOf( data[2]); 
+		//Need the "& 0xFF" to process the value as an unsigned byte
+		//Basic logic here: Assume the third data byte is the evolution-to. This is the case for most pokemon.
+		//However, if the fourth byte is not zero, that instead will hold the evolution-to info and we use that instead
+		int evo = Integer.valueOf(data[2] & 0xFF);
+		if(Integer.valueOf(data[3] & 0xFF) != 0)	{
+			evo = Integer.valueOf(data[3] & 0xFF);
+		}
+		//evo is currently the position in the game's table of pokemon, so we need to use this to get the pokemon name
+		String name = this.getPokemonNameByPosition(evo-1);
+		mainFrame.setEvolutionOutput(name);
 	}
 	
 	private static class PokemonData {
