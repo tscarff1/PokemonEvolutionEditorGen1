@@ -82,16 +82,21 @@ public class DataManager {
 		byte[] data = FileManager.getBytes(currentPtr, 4);
 		mainFrame.setEvolutionMethod(Integer.valueOf(data[0]));
 		mainFrame.setEvolutionDetail(Integer.valueOf(data[1]));
-		//Need the "& 0xFF" to process the value as an unsigned byte
-		//Basic logic here: Assume the third data byte is the evolution-to. This is the case for most pokemon.
-		//However, if the fourth byte is not zero, that instead will hold the evolution-to info and we use that instead
-		int evo = Integer.valueOf(data[2] & 0xFF);
-		if(Integer.valueOf(data[3] & 0xFF) != 0)	{
-			evo = Integer.valueOf(data[3] & 0xFF);
+		String name = null;
+		//Being evolution output logic
+		if(Integer.valueOf(data[0]) != 0) {
+			//Need the "& 0xFF" to process the value as an unsigned byte
+			//Basic logic here: Assume the third data byte is the evolution-to. This is the case for most pokemon.
+			//However, if the fourth byte is not zero, that instead will hold the evolution-to info and we use that instead
+			int evo = Integer.valueOf(data[2] & 0xFF);
+			if(Integer.valueOf(data[3] & 0xFF) != 0)	{
+				evo = Integer.valueOf(data[3] & 0xFF);
+			}
+			//evo is currently the position in the game's table of pokemon, so we need to use this to get the pokemon name
+			name = this.getPokemonNameByPosition(evo-1);
 		}
-		//evo is currently the position in the game's table of pokemon, so we need to use this to get the pokemon name
-		String name = this.getPokemonNameByPosition(evo-1);
 		mainFrame.setEvolutionOutput(name);
+			
 	}
 	
 	private static class PokemonData {

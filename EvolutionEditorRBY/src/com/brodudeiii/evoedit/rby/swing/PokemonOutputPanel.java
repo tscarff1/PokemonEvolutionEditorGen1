@@ -24,13 +24,18 @@ public class PokemonOutputPanel extends JScrollPane {
 	
 	public void setSelection(int selection) {
 		pokemonList.setSelectedIndex(selection);
+		pokemonList.ensureIndexIsVisible(pokemonList.getSelectedIndex());
 	}
 	
 	public void setSelection(String selection) {
+		if(selection  == null) {
+			pokemonList.clearSelection();
+		}
 		for(int i =0; i < pokemonList.getModel().getSize(); i++) {
 			if(pokemonList.getModel().getElementAt(i) != null && pokemonList.getModel().getElementAt(i).equals(selection)) {
 				setSelection(i);
 			}
+			
 		}
 	}
 	
