@@ -56,6 +56,7 @@ public class MenuBar extends JMenuBar{
 		            File file = chooser.getSelectedFile();
 		            try {
 		            	FileManager.openFile(file);
+		            	mainFrame.setDisplayMode(MainFrame.DisplayMode.CONTENT);
 		            } catch(Exception ex) {
 		            	mainFrame.displayError(ex.getMessage());
 		            }

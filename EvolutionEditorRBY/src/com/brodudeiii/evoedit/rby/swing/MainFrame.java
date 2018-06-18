@@ -20,6 +20,8 @@ public class MainFrame extends JFrame {
 	public static final int RADIOHGAP = 40;
 	public static final int MID_PANEL_WIDTH = 260;
 	
+	private JPanel contentPanel;
+	
 	private MethodsPanel methodsPanel;
 	private JPanel detailsPanel;
 	private StonesPanel stonesPanel;
@@ -39,6 +41,11 @@ public class MainFrame extends JFrame {
 		public static final String TRADE = "TRADE";
 	}
 	
+	public static class DisplayMode {
+		public static final String CONTENT = "CONTENT";
+		public static final String EMPTY = "EMPTY";
+	}
+	
 	public MainFrame() {
 		super("Evolution Editor - RBY");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -50,11 +57,16 @@ public class MainFrame extends JFrame {
 		dataManager = new DataManager(this);
 		
 		Container content = this.getContentPane();
-		content.setLayout(new BorderLayout());
+		content.setLayout(new CardLayout());
+		contentPanel = new JPanel(new BorderLayout());
+
+		content.add(new JPanel(), DisplayMode.EMPTY);
+		content.add(contentPanel, DisplayMode.CONTENT);
+		
 		inputPanel = new PokemonInputPanel(this);
 		outputPanel = new PokemonOutputPanel(this);
-		content.add(inputPanel, BorderLayout.LINE_START);
-		content.add(outputPanel, BorderLayout.LINE_END);
+		contentPanel.add(inputPanel, BorderLayout.LINE_START);
+		contentPanel.add(outputPanel, BorderLayout.LINE_END);
 		setupMiddlePanel();
 		
 		this.setVisible(true);
@@ -62,7 +74,6 @@ public class MainFrame extends JFrame {
 
 	
 	private void setupMiddlePanel() {
-		Container content = this.getContentPane();
 		JPanel middlePanel = new JPanel();
 		middlePanel.setBorder(BorderFactory.createLoweredBevelBorder()); 
 		
@@ -80,7 +91,7 @@ public class MainFrame extends JFrame {
 		middlePanel.add(methodsPanel);
 		middlePanel.add(detailsPanel);
 		middlePanel.add(buttonsPanel);
-		content.add(middlePanel, BorderLayout.CENTER);
+		contentPanel.add(middlePanel, BorderLayout.CENTER);
 	}
 	
 	private void setupBlankPanel() {
@@ -101,6 +112,21 @@ public class MainFrame extends JFrame {
 				container.show(detailsPanel, Method.STONE);
 				break;
 			default:
+				break;
+		}
+	}
+	
+	public void setDisplayMode(String displayMode) {
+		CardLayout container = (CardLayout) this.getContentPane().getLayout();
+		switch(displayMode) {
+			case DisplayMode.CONTENT:
+				container.show(this.getContentPane(), displayMode);
+				break;
+			case DisplayMode.EMPTY:
+				
+				break;
+			default:
+				displayError("Error: invalid display option " + displayMode);
 				break;
 		}
 	}
