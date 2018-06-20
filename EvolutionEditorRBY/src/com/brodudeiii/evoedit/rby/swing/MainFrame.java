@@ -6,11 +6,9 @@ import java.awt.Container;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
-import javax.swing.JList;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.ListSelectionModel;
 
 import com.brodudeiii.evoedit.rby.data.DataManager;
 
@@ -60,7 +58,9 @@ public class MainFrame extends JFrame {
 		content.setLayout(new CardLayout());
 		contentPanel = new JPanel(new BorderLayout());
 
-		content.add(new JPanel(), DisplayMode.EMPTY);
+		JPanel emptyPanel = new JPanel();
+		emptyPanel.add(new JLabel("Please Open a ROM to begin."));
+		content.add(emptyPanel, DisplayMode.EMPTY);
 		content.add(contentPanel, DisplayMode.CONTENT);
 		
 		inputPanel = new PokemonInputPanel(this);
