@@ -13,7 +13,7 @@ import com.brodudeiii.evoedit.rby.swing.MainFrame;
 public class DataManager {
 
 	//For inputs we want the pointer given the pokemon name
-	private Map<String, PokemonData>pokemonDataByName;
+	private Map<String, PokemonPointerData>pokemonDataByName;
 	//For setting outputs we want the name given the pointer
 	private Map<Integer, String> namesByPointer;
 	
@@ -22,7 +22,7 @@ public class DataManager {
 	
 	public DataManager(MainFrame mainFrame) {
 		this.mainFrame = mainFrame;
-		pokemonDataByName = new LinkedHashMap<String, PokemonData>();
+		pokemonDataByName = new LinkedHashMap<String, PokemonPointerData>();
 		namesByPointer = new LinkedHashMap<Integer, String>();
 		File inputFile = new File(".\\src\\com\\brodudeiii\\evoedit\\rby\\data/evo-pointers.txt");
 		BufferedReader reader = null;
@@ -32,7 +32,7 @@ public class DataManager {
 			while((line = reader.readLine()) != null) {
 				int offset = Integer.parseInt(reader.readLine());
 				int pokedex = Integer.parseInt(reader.readLine());
-				pokemonDataByName.put(line, new PokemonData(line, offset, pokedex));
+				pokemonDataByName.put(line, new PokemonPointerData(offset, pokedex));
 				namesByPointer.put(offset, line);
 			}
 		} catch (FileNotFoundException e) {
@@ -99,13 +99,11 @@ public class DataManager {
 			
 	}
 	
-	private static class PokemonData {
+	private static class PokemonPointerData {
 		private int pokedex;
-		private String name;
 		private int pointer;
 		
-		public PokemonData(String name, int pointer, int pokedex) {
-			this.name = name;
+		public PokemonPointerData(int pointer, int pokedex) {
 			this.pointer = pointer;
 			this.pokedex = pokedex;
 		}
@@ -114,24 +112,8 @@ public class DataManager {
 			return pokedex;
 		}
 
-		public void setPokedex(int pokedex) {
-			this.pokedex = pokedex;
-		}
-
-		public String getName() {
-			return name;
-		}
-
-		public void setName(String name) {
-			this.name = name;
-		}
-
 		public int getPointer() {
 			return pointer;
-		}
-
-		public void setPointer(int pointer) {
-			this.pointer = pointer;
 		}
 	}
 }
