@@ -19,7 +19,9 @@ public class DataManager {
 	
 	private String activeInput; //The input Pokemon currently being modified
 	private MainFrame mainFrame;
-	
+	private int origEvoMethod;
+	private int origEvoDetail;
+	private String origEvoTo;
 	public DataManager(MainFrame mainFrame) {
 		this.mainFrame = mainFrame;
 		pokemonDataByName = new LinkedHashMap<String, PokemonPointerData>();
@@ -80,8 +82,10 @@ public class DataManager {
 		this.activeInput = pokemon;
 		int currentPtr =pokemonDataByName.get(pokemon).getPointer();
 		byte[] data = FileManager.getBytes(currentPtr, 4);
-		mainFrame.setEvolutionMethod(Integer.valueOf(data[0]));
-		mainFrame.setEvolutionDetail(Integer.valueOf(data[1]));
+		origEvoMethod = Integer.valueOf(data[0]);
+		mainFrame.setEvolutionMethod(origEvoMethod);
+		origEvoDetail = Integer.valueOf(data[1]);
+		mainFrame.setEvolutionDetail(origEvoDetail);
 		String name = null;
 		//Being evolution output logic
 		if(Integer.valueOf(data[0]) != 0) {
@@ -95,8 +99,45 @@ public class DataManager {
 			//evo is currently the position in the game's table of pokemon, so we need to use this to get the pokemon name
 			name = this.getPokemonNameByPosition(evo-1);
 		}
+		origEvoTo = name;
 		mainFrame.setEvolutionOutput(name);
 			
+	}
+	
+	public void setEvolutionMethod(String evoMethod) {
+		int pokePointer = pokemonDataByName.get(activeInput).getPointer();
+		int evoMethodVal = 0;
+		switch(evoMethod) {
+			case MainFrame.Method.NONE:
+				evoMethodVal = 0;
+				break;
+			case MainFrame.Method.LEVEL:
+				evoMethodVal = 1;
+				break;
+			case MainFrame.Method.STONE:
+				evoMethodVal = 2;
+				break;
+			case MainFrame.Method.TRADE:
+				evoMethodVal = 3;
+				break;
+			default:
+				evoMethodVal = -1;
+				mainFrame.displayError("Error setting evolution method: Invalid Evolution Method.");
+				break;
+		}
+		//Only change the value in the raw bytes if it is a valid value
+		if(evoMethodVal != -1) {
+			FileManager.setEvoMethod(pokePointer, evoMethodVal);
+		}
+	}
+	
+	public void setEvolutionDetail(int evoDetail) {
+		int pokePointer = pokemonDataByName.get(activeInput).getPointer();
+		FileManager.setEvoDetail(pokePointer, evoDetail);
+	}
+	
+	public int getActivePointer() {
+		return pokemonDataByName.get(activeInput).getPointer();
 	}
 	
 	private static class PokemonPointerData {
@@ -116,4 +157,5 @@ public class DataManager {
 			return pointer;
 		}
 	}
+	
 }

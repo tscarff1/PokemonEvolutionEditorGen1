@@ -41,7 +41,7 @@ public class ButtonsPanel extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(e.getActionCommand().equals(ACTION_APPLY)) {
-				
+				mainFrame.applyEvolutionData();
 			} else if(e.getActionCommand().equals(ACTION_REVERT)) {
 				
 			}

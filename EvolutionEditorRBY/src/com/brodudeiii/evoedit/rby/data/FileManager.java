@@ -28,4 +28,12 @@ public class FileManager {
 	 public static boolean isGameLoaded() {
 		  return gameLoaded;
 	 }
+	 
+	 public static void setEvoMethod(int pointer, int val) {
+		 workingFile[pointer] = (byte) val;
+	 }
+	 
+	 public static void setEvoDetail(int pointer, int val) {
+		 workingFile[pointer+1] = (byte) val;
+	 }
 }

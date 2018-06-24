@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import com.brodudeiii.evoedit.rby.data.DataManager;
+import com.brodudeiii.evoedit.rby.data.FileManager;
 
 public class MainFrame extends JFrame {
 	private static String[] pokemonNames;
@@ -158,7 +159,7 @@ public class MainFrame extends JFrame {
 				setDetailsPanel(Method.TRADE);
 				break;
 			default:
-				//TODO: Handle errors better
+				displayError("Error setting Evolution Method: " + method + " is not a valid evolution method.");
 				break;
 		}
 	}
@@ -179,5 +180,56 @@ public class MainFrame extends JFrame {
 	
 	public void setEvolutionOutput(String name) {
 		outputPanel.setSelection(name);
+	}
+	
+	public void applyEvolutionData() {
+		int evoMethod = -1;
+		String errors = "The following errors occurred while applying evolution data: \n";
+		boolean hasError = false;
+		switch(methodsPanel.getSelectedMethod()) {
+			case Method.NONE:
+				evoMethod = 0;
+				break;
+			case Method.LEVEL:
+				evoMethod = 1;
+				break;
+			case Method.STONE:
+				evoMethod = 2;
+				break;
+			case Method.TRADE:
+				evoMethod = 3;
+				break;
+		}
+		if(evoMethod == -1) {
+			errors += "Error setting evolution method: " + methodsPanel.getSelectedMethod() + " is not a valid evolution method. \n";
+			hasError = true;
+		}
+		
+		int evoDetail = -1;
+		//Level up
+		if(evoMethod == 1) {
+			try {
+				evoDetail = levelPanel.getLevel();
+			} catch(Exception e) {
+				errors += e.getMessage() + "\n";
+				hasError = true;
+			}
+		//Stone
+		} else if(evoMethod == 2) {
+			try {
+				evoDetail = stonesPanel.getSelectedStoneValue();
+			} catch(Exception e) {
+				errors += e.getMessage() + "\n";
+				hasError = true;
+			}
+		}
+		
+		if(hasError) {
+			displayError(errors);
+		}
+		
+		int activePointer = dataManager.getActivePointer();
+		FileManager.setEvoMethod(activePointer, evoMethod);
+		FileManager.setEvoDetail(activePointer, evoDetail);
 	}
 }

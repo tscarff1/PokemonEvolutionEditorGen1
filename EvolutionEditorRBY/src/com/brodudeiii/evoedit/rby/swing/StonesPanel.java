@@ -97,6 +97,31 @@ public class StonesPanel extends JPanel {
 		}
 	}
 	
+	public int getSelectedStoneValue() throws Exception {
+		String selectedButton = "";
+		for(JRadioButton button : buttons) {
+			if(button.isSelected()) {
+				selectedButton = button.getActionCommand();
+			}
+		}
+		
+		switch(selectedButton) {
+			case "MOON": 
+				return STONE.MOON;
+			case "THUNDER":
+				return STONE.THUNDER;
+			case "FIRE":
+				return STONE.FIRE;
+			case "WATER":
+				return STONE.WATER;
+			case "LEAF":
+				return STONE.LEAF;
+			default:
+				throw new Exception("Error getting selected stone: " + selectedButton + " is an invalid option.");
+				
+		}
+	}
+	
 	private class StonesListener implements ActionListener {
 
 		@Override
