@@ -215,13 +215,23 @@ public class MainFrame extends JFrame {
 			}
 		}
 		
+		int activePointer = dataManager.getActivePointer();
+		FileManager.setEvoMethod(activePointer, evoMethod);
+		FileManager.setEvoDetail(activePointer, evoDetail);
+		
+		try {
+			int evoTo = dataManager.getIndexFor(outputPanel.getSelection());
+			FileManager.setEvoTo(activePointer, evoTo);
+		} catch(Exception e) {
+			errors += e.getMessage() + "\n";
+			hasError = true;
+		}
+		
 		if(hasError) {
 			displayError(errors);
 		}
 		
-		int activePointer = dataManager.getActivePointer();
-		FileManager.setEvoMethod(activePointer, evoMethod);
-		FileManager.setEvoDetail(activePointer, evoDetail);
+		
 	}
 	
 	public void revertEvolutionData() {

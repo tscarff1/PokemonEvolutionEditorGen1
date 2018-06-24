@@ -144,6 +144,16 @@ public class DataManager {
 		return pokemonDataByName.get(activeInput).getPointer();
 	}
 	
+	public int getIndexFor(String name) throws Exception {
+		String[] namesArray = getPokemonNamesArray();
+		for(int i = 0; i < namesArray.length; i++) {
+			if(namesArray[i].equals(name)) {
+				return i-1;
+			}
+		} 
+		throw new Exception("Error getting index: No index exists for Pokemon with name " + name);
+	}
+	
 	private static class PokemonPointerData {
 		private int pokedex;
 		private int pointer;

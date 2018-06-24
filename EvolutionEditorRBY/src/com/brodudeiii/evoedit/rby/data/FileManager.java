@@ -36,4 +36,13 @@ public class FileManager {
 	 public static void setEvoDetail(int pointer, int val) {
 		 workingFile[pointer+1] = (byte) val;
 	 }
+	 
+	 public static void setEvoTo(int pointer, int val) {
+		 //For some reason, some Pokemon use byte 3 for evoTo, and some use byte 4. This is a check to keep with whatever already exists
+		 if(Integer.valueOf(workingFile[pointer+3] & 0xFF) != 0) {
+			 workingFile[pointer+3] = (byte) val;
+		 } else {
+			 workingFile[pointer+2] = (byte) val;
+		 }
+	 }
 }

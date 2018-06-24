@@ -39,6 +39,10 @@ public class PokemonOutputPanel extends JScrollPane {
 		}
 	}
 	
+	public String getSelection() {
+		return pokemonList.getSelectedValue();
+	}
+	
 	private class ListListener implements ListSelectionListener {
 
 		@Override
