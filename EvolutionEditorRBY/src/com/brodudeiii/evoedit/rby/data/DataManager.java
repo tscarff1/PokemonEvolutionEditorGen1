@@ -136,6 +136,10 @@ public class DataManager {
 		FileManager.setEvoDetail(pokePointer, evoDetail);
 	}
 	
+	public String getActiveInput() {
+		return activeInput;
+	}
+	
 	public int getActivePointer() {
 		return pokemonDataByName.get(activeInput).getPointer();
 	}

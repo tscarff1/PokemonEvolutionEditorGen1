@@ -186,19 +186,10 @@ public class MainFrame extends JFrame {
 		int evoMethod = -1;
 		String errors = "The following errors occurred while applying evolution data: \n";
 		boolean hasError = false;
-		switch(methodsPanel.getSelectedMethod()) {
-			case Method.NONE:
-				evoMethod = 0;
-				break;
-			case Method.LEVEL:
-				evoMethod = 1;
-				break;
-			case Method.STONE:
-				evoMethod = 2;
-				break;
-			case Method.TRADE:
-				evoMethod = 3;
-				break;
+		try {
+			evoMethod = methodsPanel.getSelectedMethodAsInt();
+		} catch(Exception e) {
+			
 		}
 		if(evoMethod == -1) {
 			errors += "Error setting evolution method: " + methodsPanel.getSelectedMethod() + " is not a valid evolution method. \n";
@@ -231,5 +222,9 @@ public class MainFrame extends JFrame {
 		int activePointer = dataManager.getActivePointer();
 		FileManager.setEvoMethod(activePointer, evoMethod);
 		FileManager.setEvoDetail(activePointer, evoDetail);
+	}
+	
+	public void revertEvolutionData() {
+		dataManager.setActiveInput(dataManager.getActiveInput());
 	}
 }

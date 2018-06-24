@@ -75,6 +75,27 @@ public class MethodsPanel extends JPanel {
 		return null;
 	}
 	
+	public int getSelectedMethodAsInt() throws Exception{
+		int evoMethod = -1;
+		switch(getSelectedMethod()) {
+			case Method.NONE:
+				evoMethod = 0;
+				break;
+			case Method.LEVEL:
+				evoMethod = 1;
+				break;
+			case Method.STONE:
+				evoMethod = 2;
+				break;
+			case Method.TRADE:
+				evoMethod = 3;
+				break;
+			default:
+				throw new Exception("Error: Invalid method selected.");
+		}
+		return evoMethod;
+	}
+	
 	private class MethodsListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
