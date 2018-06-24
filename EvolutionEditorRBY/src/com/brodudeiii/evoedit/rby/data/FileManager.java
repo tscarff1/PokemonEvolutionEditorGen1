@@ -13,8 +13,8 @@ public class FileManager {
 		 gameLoaded = true;
 	 }
 	 
-	 public static void saveFile(File file) {
-		 
+	 public static void saveFile(File file) throws IOException {
+		 Files.write(file.toPath(), workingFile);
 	 }
 	 
 	 public static byte[] getBytes(int offset, int length) {

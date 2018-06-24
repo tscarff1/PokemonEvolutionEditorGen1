@@ -65,7 +65,11 @@ public class MenuBar extends JMenuBar{
 				int selectedOption = chooser.showSaveDialog(mainFrame);
 				 if (selectedOption == JFileChooser.APPROVE_OPTION) {
 			            File file = chooser.getSelectedFile();
-			            //TODO: Handle saving file
+			            try {
+			            	FileManager.saveFile(file);
+			            } catch(Exception ex) {
+			            	mainFrame.displayError(ex.getMessage());
+			            }
 			        }
 			}
 		}
