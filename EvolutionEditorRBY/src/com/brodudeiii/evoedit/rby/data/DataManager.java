@@ -1,13 +1,14 @@
 package com.brodudeiii.evoedit.rby.data;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.brodudeiii.evoedit.rby.logging.Logger;
 import com.brodudeiii.evoedit.rby.swing.MainFrame;
 
 public class DataManager {
@@ -23,10 +24,9 @@ public class DataManager {
 		this.mainFrame = mainFrame;
 		pokemonDataByName = new LinkedHashMap<String, PokemonPointerData>();
 		namesByPointer = new LinkedHashMap<Integer, String>();
-		File inputFile = new File(".\\src\\com\\brodudeiii\\evoedit\\rby\\data/evo-pointers.txt");
-		BufferedReader reader = null;
-		try {
-			reader = new BufferedReader(new FileReader(inputFile));
+		InputStream inputFile = getClass().getResourceAsStream("/com/brodudeiii/evoedit/rby/data/evo-pointers.txt");
+		try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputFile))){
+			
 			String line;
 			while((line = reader.readLine()) != null) {
 				int offset = Integer.parseInt(reader.readLine());
@@ -36,20 +36,11 @@ public class DataManager {
 			}
 		} catch (FileNotFoundException e) {
 			
-			//TODO: Handle errors better
+			Logger.log("Error occurred while reading ROM data: " + e.getMessage());
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Handle errors better
+			Logger.log("Error occurred while reading ROM data: " + e.getMessage());
 			e.printStackTrace();
-		} finally {
-			if(reader != null) {
-				try {
-					reader.close();
-				} catch (IOException e) {
-					//At this point we're just kinda screwed
-					e.printStackTrace();
-				}
-			}
 		}
 		
 	}
